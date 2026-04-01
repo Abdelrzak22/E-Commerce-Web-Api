@@ -5,12 +5,13 @@ using E_Commerce.Presistence.Data.DbContexts;
 using E_Commerce_web.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Threading.Tasks;
 
 namespace E_Commerce_web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,8 @@ namespace E_Commerce_web
 
             #region seedDATA and Migrate
 
-            app.MigrateDatabase().SeedDatabase();
+            await app.MigrateDatabase();
+            await   app.SeedDatabase();
            
             
             #endregion
