@@ -10,7 +10,7 @@ namespace E_Commerce_web.Extensions
         public async static Task< WebApplication> MigrateDatabase(this WebApplication app)
         {
             await using var scope = app.Services.CreateAsyncScope();
-            var dbcontextService = scope.ServiceProvider.GetRequiredService<StoreDbcontext>();\
+            var dbcontextService = scope.ServiceProvider.GetRequiredService<StoreDbcontext>();
             var pendingMigrations = await dbcontextService.Database.GetPendingMigrationsAsync();
             if (pendingMigrations.Any())
                await dbcontextService.Database.MigrateAsync();
