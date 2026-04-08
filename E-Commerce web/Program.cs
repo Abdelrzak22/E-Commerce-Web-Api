@@ -3,6 +3,8 @@ using E_Commerce.Domain.Contracts;
 using E_Commerce.Presistence.Data.DataSeed;
 using E_Commerce.Presistence.Data.DbContexts;
 using E_Commerce.Presistence.Reposatory;
+using E_Commerce.ServiceAbstraction;
+using E_Commerce.Services;
 using E_Commerce.Services.MapperProfiles;
 using E_Commerce_web.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +31,9 @@ namespace E_Commerce_web
 
         });
             builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+            builder.Services.AddScoped<IProductServices, ProductService>();
             builder.Services.AddAutoMapper(x => x.AddProfile<ProductProfile>());
+            builder.Services.AddTransient<ProductPictureUrl>();
 
             builder.Services.AddScoped<IDataintializer,Dataintializer>();
 
@@ -52,6 +56,7 @@ namespace E_Commerce_web
 
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
             app.UseAuthorization();
 
 

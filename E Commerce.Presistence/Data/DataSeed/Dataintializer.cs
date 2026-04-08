@@ -28,10 +28,10 @@ namespace E_Commerce.Presistence.Data.DataSeed
                 var HasProsdut= await _dbcontext.Products.AnyAsync();
                 var HasBrand= await _dbcontext.ProductBrands.AnyAsync();
                 var HasType=await _dbcontext.ProductTypes.AnyAsync();
-                if (HasBrand & HasType & HasProsdut) return;
+                if (HasBrand && HasType && HasProsdut) return;
                 if(!HasBrand)
                 {
-                  await  SeedDataFromJson<ProductBrand, int>("types.json", _dbcontext.ProductBrands);
+                  await  SeedDataFromJson<ProductBrand, int>("brands.json", _dbcontext.ProductBrands);
 
                 }
                 if (!HasType)
@@ -40,7 +40,7 @@ namespace E_Commerce.Presistence.Data.DataSeed
                 }
                 if (!HasProsdut)
                 {
-                 await   SeedDataFromJson<Product, int>("types.json", _dbcontext.Products);
+                 await   SeedDataFromJson<Product, int>("products.json", _dbcontext.Products);
 
                 }
                await _dbcontext.SaveChangesAsync();
@@ -55,7 +55,8 @@ namespace E_Commerce.Presistence.Data.DataSeed
         private async Task SeedDataFromJson<T,Tkey>(string filename,DbSet<T> dbset) where T :BaseEntity<Tkey>
         {
 
-            var filePath = @"..\E Commerce.Presistence\Data\DataSeed\JsonFiles" + filename;
+            var filePath = @"..\E Commerce.Presistence\Data\DataSeed\JsonFiles\" + filename;
+      
             if (!File.Exists(filePath)) return;
             try
             {

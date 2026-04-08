@@ -12,7 +12,7 @@ namespace E_Commerce.Presistence.Reposatory
     public class UnitOfWork : IUnitOfWork
     {
         private readonly StoreDbcontext _storeDbcontext;
-        private readonly Dictionary<Type, object> _Reposatory;
+        private readonly Dictionary<Type, object> _Reposatory = [];
 
         public UnitOfWork(StoreDbcontext storeDbcontext)
         {
