@@ -29,7 +29,11 @@ namespace E_Commerce.Presistence.Reposatory
         
 
         public async Task<IEnumerable<IEntity>> GetAllAsync()=> await _storeDbcontext.Set<IEntity>().ToListAsync();
-        
+
+        public async Task<IEnumerable<IEntity>> GetAllAsync(ISpecifications<IEntity, Tkey> specifications)
+        {
+            return await SpacificationBuilder.CreateQuery(_storeDbcontext.Set<IEntity>(), specifications).ToListAsync();
+        }
 
         public async Task<IEntity?> GetByIdAsync(int id)=>await _storeDbcontext.Set<IEntity>().FindAsync(id);
         

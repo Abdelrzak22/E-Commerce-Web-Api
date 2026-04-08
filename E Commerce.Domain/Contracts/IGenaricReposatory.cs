@@ -10,6 +10,7 @@ namespace E_Commerce.Domain.Contracts
     public interface IGenaricReposatory<IEntity,Tkey> where IEntity:BaseEntity<Tkey>
     {
         Task<IEnumerable<IEntity>> GetAllAsync();
+        Task<IEnumerable<IEntity>> GetAllAsync(ISpecifications<IEntity,Tkey> specifications);
         Task<IEntity?> GetByIdAsync(int id);
         Task AddAsync(IEntity entity);
         void Update (IEntity entity);
