@@ -44,6 +44,7 @@ namespace E_Commerce.Services.Spacifications
                     
             }
 
+            ApplyPagination(queryParams.PageSize, queryParams.PageIndex);
         }
     }
 }

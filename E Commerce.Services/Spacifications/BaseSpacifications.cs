@@ -1,4 +1,5 @@
-﻿using E_Commerce.Domain.Contracts;
+﻿using AutoMapper.Configuration.Conventions;
+using E_Commerce.Domain.Contracts;
 using E_Commerce.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,37 @@ namespace E_Commerce.Services.Spacifications
             OrderBy = expression;
         }
         public Expression<Func<TEntity, object>> OrderByDescending { get; private set; }
+
+
+
+
+
+
+
+
+
+        public int Take { get; private set; }
+        public int Skip { get; private set; }
+        public bool IsPaginated { get; private set; }
+
+        protected void ApplyPagination (int PageSize,int PageIndex)
+        {
+            IsPaginated = true;
+            Take = PageSize;
+            Skip = (PageIndex - 1) * PageSize;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
         protected void AddOrderByDescending(Expression<Func<TEntity,object>> expression)
         {
