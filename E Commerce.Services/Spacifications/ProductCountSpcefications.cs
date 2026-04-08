@@ -11,9 +11,12 @@ namespace E_Commerce.Services.Spacifications
 {
     internal class ProductCountSpcefications : BaseSpacifications<Product, int>
     {
-        public ProductCountSpcefications(ProductQueryParams queryParams) : base(p => (queryParams.BrandId == null || p.BrandId == queryParams.BrandId) && (queryParams.TypeId == null || p.TypeId == queryParams.TypeId)
-            && (string.IsNullOrEmpty(queryParams.Search) || p.Name.ToLower().Contains(queryParams.Search.ToLower())))
+        public ProductCountSpcefications(ProductQueryParams queryParams) : base(ProductSpecificationHelper.GetProductCeriateria(queryParams))
         {
+
         }
-    }
+    
+        }
+    
+    
 }
