@@ -15,7 +15,8 @@ namespace E_Commerce.Services.Spacifications
             AddInclude(p => p.ProductBrand);
 
         }
-        public ProductWithTypeAndBrandSpecifications() : base(null)
+        public ProductWithTypeAndBrandSpecifications(int ? brandid,int ? typeid) :
+            base(p=>(brandid==null || p.BrandId==brandid)&&(typeid==null || p.TypeId==typeid))
         {
             AddInclude(p => p.ProductType);
             AddInclude(p => p.ProductBrand);

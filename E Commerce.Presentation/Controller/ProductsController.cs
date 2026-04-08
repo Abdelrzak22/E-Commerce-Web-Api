@@ -27,9 +27,9 @@ namespace E_Commerce.Presentation.Controller
 
         //get:baseurl/api/Products
 
-        public async Task<ActionResult<IEnumerable<ProductDtos>>> GetAllProducts()
+        public async Task<ActionResult<IEnumerable<ProductDtos>>> GetAllProducts(int? brandid, int? typeid)
         {
-            var products=await _productServices.GetAllProductAsync();
+            var products=await _productServices.GetAllProductAsync(brandid,typeid);
 
             return Ok(products);
         }
