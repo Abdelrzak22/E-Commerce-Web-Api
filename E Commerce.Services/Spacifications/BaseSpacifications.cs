@@ -2,6 +2,7 @@
 using E_Commerce.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -16,6 +17,19 @@ namespace E_Commerce.Services.Spacifications
         public ICollection<Expression<Func<TEntity, object>>> IncludeExpressions { get; } = [];
 
         public Expression<Func<TEntity, bool>> Ceriateria { get; }
+
+        public Expression<Func<TEntity, object>> OrderBy { get; private set; }
+        protected void AddOrderBy(Expression<Func<TEntity,object>> expression)
+        {
+            OrderBy = expression;
+        }
+        public Expression<Func<TEntity, object>> OrderByDescending { get; private set; }
+
+        protected void AddOrderByDescending(Expression<Func<TEntity,object>> expression)
+        {
+            OrderByDescending = expression;
+        }
+
 
         public BaseSpacifications(Expression<Func<TEntity,bool>> value)
         {

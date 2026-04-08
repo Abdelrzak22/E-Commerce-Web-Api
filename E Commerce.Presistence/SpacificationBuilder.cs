@@ -28,6 +28,16 @@ namespace E_Commerce.Presistence
                         query = query.Include(ex);
                     }
                 }
+
+                if (specifications.OrderBy is not null)
+                {
+                    query = query.OrderBy(specifications.OrderBy);
+                }
+                if (specifications.OrderByDescending is not null)
+                {
+                    query = query.OrderByDescending(specifications.OrderByDescending);
+                }
+
             }
 
             return query;
