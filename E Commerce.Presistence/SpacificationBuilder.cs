@@ -16,6 +16,11 @@ namespace E_Commerce.Presistence
             var query = EntryPoint;
             if(specifications is not null)
             {
+
+                if(specifications.Ceriateria is not null)
+                {
+                    query = query.Where(specifications.Ceriateria);
+                }
                 if(specifications.IncludeExpressions is not null && specifications.IncludeExpressions.Any())
                 {
                     foreach(var ex in specifications.IncludeExpressions)

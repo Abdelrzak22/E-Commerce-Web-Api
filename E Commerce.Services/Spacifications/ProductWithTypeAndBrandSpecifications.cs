@@ -9,8 +9,13 @@ namespace E_Commerce.Services.Spacifications
 {
     internal class ProductWithTypeAndBrandSpecifications:BaseSpacifications<Product,int>
     {
+        public ProductWithTypeAndBrandSpecifications(int id) : base(p => p.Id == id)
+        {
+            AddInclude(p => p.ProductType);
+            AddInclude(p => p.ProductBrand);
 
-        public ProductWithTypeAndBrandSpecifications() : base()
+        }
+        public ProductWithTypeAndBrandSpecifications() : base(null)
         {
             AddInclude(p => p.ProductType);
             AddInclude(p => p.ProductBrand);

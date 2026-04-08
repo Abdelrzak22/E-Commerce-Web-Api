@@ -36,7 +36,12 @@ namespace E_Commerce.Presistence.Reposatory
         }
 
         public async Task<IEntity?> GetByIdAsync(int id)=>await _storeDbcontext.Set<IEntity>().FindAsync(id);
-        
+
+        public async Task<IEntity?> GetByIdAsync(ISpecifications<IEntity, Tkey> specifications)
+        {
+            return await SpacificationBuilder.CreateQuery(_storeDbcontext.Set<IEntity>(), specifications).FirstOrDefaultAsync();
+
+        }
 
         public void Update(IEntity entity) =>  _storeDbcontext.Set<IEntity>().Update(entity);
         

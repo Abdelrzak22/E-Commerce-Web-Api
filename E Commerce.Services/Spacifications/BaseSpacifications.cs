@@ -11,7 +11,16 @@ namespace E_Commerce.Services.Spacifications
 {
     internal abstract class BaseSpacifications<TEntity, Tkey> : ISpecifications<TEntity, Tkey> where TEntity : BaseEntity<Tkey>
     {
+
+
         public ICollection<Expression<Func<TEntity, object>>> IncludeExpressions { get; } = [];
+
+        public Expression<Func<TEntity, bool>> Ceriateria { get; }
+
+        public BaseSpacifications(Expression<Func<TEntity,bool>> value)
+        {
+            Ceriateria = value;
+        }
 
         protected void AddInclude(Expression<Func<TEntity, object>> Includeexp)
         {

@@ -45,7 +45,9 @@ namespace E_Commerce.Services
 
         public async Task<ProductDtos> GetProductById(int id)
         {
-            var product = await _unitOfWork.GenericRepo<Product, int>().GetByIdAsync(id);
+
+            var specific = new ProductWithTypeAndBrandSpecifications();
+            var product = await _unitOfWork.GenericRepo<Product, int>().GetByIdAsync(specific);
             return _mapper.Map<ProductDtos>(product);
         }
     }
