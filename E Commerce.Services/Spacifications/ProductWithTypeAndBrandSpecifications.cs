@@ -1,4 +1,5 @@
 ﻿using E_Commerce.Domain.Entities.ProductModules;
+using E_Commerce.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,10 @@ namespace E_Commerce.Services.Spacifications
             AddInclude(p => p.ProductBrand);
 
         }
-        public ProductWithTypeAndBrandSpecifications(int ? brandid,int ? typeid) :
-            base(p=>(brandid==null || p.BrandId==brandid)&&(typeid==null || p.TypeId==typeid))
+        public ProductWithTypeAndBrandSpecifications(ProductQueryParams queryParams) :
+            base(p => (queryParams.BrandId == null || p.BrandId == queryParams.BrandId) && (queryParams.TypeId == null || p.TypeId == queryParams.TypeId)
+            && (string.IsNullOrEmpty(queryParams.Search) || p.Name.ToLower().Contains(queryParams.Search.ToLower())))
+
         {
             AddInclude(p => p.ProductType);
             AddInclude(p => p.ProductBrand);
