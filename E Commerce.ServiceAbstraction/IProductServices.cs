@@ -11,7 +11,7 @@ namespace E_Commerce.ServiceAbstraction
     public interface IProductServices
     {
 
-        Task< IEnumerable<ProductDtos>> GetAllProductAsync(ProductQueryParams queryParams);
+        Task< PaginatedResult<ProductDtos>> GetAllProductAsync(ProductQueryParams queryParams);
 
         Task<ProductDtos> GetProductById(int id);
 

@@ -30,12 +30,16 @@ namespace E_Commerce.Services
             return  _mapper.Map<IEnumerable<BrandDtos>>(Brands);    
         }
 
-        public async Task<IEnumerable<ProductDtos>> GetAllProductAsync(ProductQueryParams queryParams)
+        public async Task<PaginatedResult<ProductDtos>> GetAllProductAsync(ProductQueryParams queryParams)
         {
 
             var specifi = new ProductWithTypeAndBrandSpecifications(queryParams);
             var products = await _unitOfWork.GenericRepo<Product, int>().GetAllAsync(specifi);
-            return _mapper.Map<IEnumerable<ProductDtos>>(products);
+            var DatecountReturn= _mapper.Map<IEnumerable<ProductDtos>>(products);
+            var size = DatecountReturn.Count();
+            var countspacification = new ProductCountSpcefications(queryParams);
+            var countAllProduct = await _unitOfWork.GenericRepo<Product, int>().CountAsync(countspacification);
+            return new PaginatedResult<ProductDtos>(queryParams.PageIndex, size, countAllProduct, DatecountReturn);
         }
 
         public async Task<IEnumerable<TypeDtos>> GetAllTypeAsync()

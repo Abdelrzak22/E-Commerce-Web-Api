@@ -23,7 +23,11 @@ namespace E_Commerce.Presistence.Reposatory
         }
 
         public async Task AddAsync(IEntity entity)=>        await _storeDbcontext.Set<IEntity>().AddAsync(entity);
-      
+
+        public async Task<int> CountAsync(ISpecifications<IEntity, Tkey> specifications   )
+        {
+            return await SpacificationBuilder.CreateQuery(_storeDbcontext.Set<IEntity>(), specifications).CountAsync(); 
+        }
 
         public void Delete(IEntity entity)=>_storeDbcontext.Set<IEntity>().Remove(entity);
         

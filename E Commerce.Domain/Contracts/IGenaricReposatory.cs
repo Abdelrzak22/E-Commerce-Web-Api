@@ -16,5 +16,7 @@ namespace E_Commerce.Domain.Contracts
         Task AddAsync(IEntity entity);
         void Update (IEntity entity);
         void Delete (IEntity entity);
+
+        Task<int> CountAsync(ISpecifications<IEntity, Tkey> specifications);
     }
 }
