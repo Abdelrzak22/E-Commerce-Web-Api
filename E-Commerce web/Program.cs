@@ -45,6 +45,8 @@ namespace E_Commerce_web
             });
             builder.Services.AddScoped<IBasketReposatory, BasketReposatory>();
             builder.Services.AddScoped<IBasketService, BasketService>();
+            builder.Services.AddScoped<ICacheRepository, CacheRepository>();
+            builder.Services.AddScoped<ICacheService, CacheService>();
 
             builder.Services.AddScoped<IDataintializer,Dataintializer>();
 
