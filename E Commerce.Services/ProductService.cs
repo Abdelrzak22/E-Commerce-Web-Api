@@ -53,6 +53,8 @@ namespace E_Commerce.Services
 
             var specific = new ProductWithTypeAndBrandSpecifications(id);
             var product = await _unitOfWork.GenericRepo<Product, int>().GetByIdAsync(specific);
+            if (product is null)
+                throw new ProductNotFound(id);
             return _mapper.Map<ProductDtos>(product);
         }
     }

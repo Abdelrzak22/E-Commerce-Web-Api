@@ -6,7 +6,10 @@ using E_Commerce.Presistence.Reposatory;
 using E_Commerce.ServiceAbstraction;
 using E_Commerce.Services;
 using E_Commerce.Services.MapperProfiles;
+using E_Commerce_web.CustomMiddleWare;
 using E_Commerce_web.Extensions;
+using E_Commerce_web.Factory;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using StackExchange.Redis;
@@ -49,6 +52,11 @@ namespace E_Commerce_web
             builder.Services.AddScoped<ICacheService, CacheService>();
 
             builder.Services.AddScoped<IDataintializer,Dataintializer>();
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = ApiResoponeFactoryy.GenerateApiValidation;
+                
+            });
 
             var app = builder.Build();
 
@@ -56,11 +64,13 @@ namespace E_Commerce_web
 
             await app.MigrateDatabase();
             await   app.SeedDatabase();
-           
-            
+
+
             #endregion
 
             // Configure the HTTP request pipeline.
+
+            app.UseMiddleware<ExceptionHandlerMiddleWare>();
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

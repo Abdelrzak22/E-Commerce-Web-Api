@@ -35,6 +35,8 @@ namespace E_Commerce.Services
         public async Task<BasketDto> GetBasketAsync(string id)
         {
             var basket= await _basketReposatory.GetBasket(id);
+            if (basket is null)
+                throw new BasketNotFound(id);
             return _mapper.Map<CustomerBasket, BasketDto>(basket!);
         }
     }
