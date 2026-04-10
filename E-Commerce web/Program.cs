@@ -35,14 +35,16 @@ namespace E_Commerce_web
             builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
             builder.Services.AddScoped<IProductServices, ProductService>();
             builder.Services.AddAutoMapper(x => x.AddProfile<ProductProfile>());
+            builder.Services.AddAutoMapper(x => x.AddProfile<BasketProfile>());
             builder.Services.AddTransient<ProductPictureUrl>();
             builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
             {
-                return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")!);
+                return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection") !);
 
 
             });
             builder.Services.AddScoped<IBasketReposatory, BasketReposatory>();
+            builder.Services.AddScoped<IBasketService, BasketService>();
 
             builder.Services.AddScoped<IDataintializer,Dataintializer>();
 
