@@ -2,6 +2,7 @@
 using E_Commerce.Domain.Contracts;
 using E_Commerce.Presistence.Data.DataSeed;
 using E_Commerce.Presistence.Data.DbContexts;
+using E_Commerce.Presistence.Data.IdentityDbcontext;
 using E_Commerce.Presistence.Reposatory;
 using E_Commerce.ServiceAbstraction;
 using E_Commerce.Services;
@@ -35,6 +36,11 @@ namespace E_Commerce_web
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 
         });
+            builder.Services.AddDbContext<StoreIdentityDbcontext>(options =>
+            {
+            options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"));
+
+        });
             builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
             builder.Services.AddScoped<IProductServices, ProductService>();
             builder.Services.AddAutoMapper(x => x.AddProfile<ProductProfile>());
@@ -63,6 +69,7 @@ namespace E_Commerce_web
             #region seedDATA and Migrate
 
             await app.MigrateDatabase();
+            await app.MigrateIdentityDatabase();
             await   app.SeedDatabase();
 
 
