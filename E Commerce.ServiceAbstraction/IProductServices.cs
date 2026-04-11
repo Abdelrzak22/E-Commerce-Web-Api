@@ -13,7 +13,7 @@ namespace E_Commerce.ServiceAbstraction
 
         Task< PaginatedResult<ProductDtos>> GetAllProductAsync(ProductQueryParams queryParams);
 
-        Task<ProductDtos> GetProductById(int id);
+        Task<Result<ProductDtos>> GetProductById(int id);
 
         Task<IEnumerable<BrandDtos>> GetAllBrandAsync();
         Task<IEnumerable<TypeDtos>> GetAllTypeAsync();

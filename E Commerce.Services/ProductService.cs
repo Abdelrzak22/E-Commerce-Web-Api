@@ -48,14 +48,14 @@ namespace E_Commerce.Services
             return _mapper.Map<IEnumerable<TypeDtos>>(types);
         }
 
-        public async Task<ProductDtos> GetProductById(int id)
+        public async Task<Result<ProductDtos>> GetProductById(int id)
         {
 
             var specific = new ProductWithTypeAndBrandSpecifications(id);
             var product = await _unitOfWork.GenericRepo<Product, int>().GetByIdAsync(specific);
             if (product is null)
-                throw new ProductNotFound(id);
-            return _mapper.Map<ProductDtos>(product);
+                return Result<ProductDtos>.Fail(Error.NotFound("product not found", $"product with id ={id} is not found"));
+            return Result<ProductDtos>.Ok( _mapper.Map<ProductDtos>(product));
         }
     }
 }
