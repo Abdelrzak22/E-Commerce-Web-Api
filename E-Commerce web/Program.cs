@@ -1,5 +1,7 @@
 
 using E_Commerce.Domain.Contracts;
+using E_Commerce.Domain.Entities.IdentityModules;
+using E_Commerce.Presistence.Data;
 using E_Commerce.Presistence.Data.DataSeed;
 using E_Commerce.Presistence.Data.DbContexts;
 using E_Commerce.Presistence.Data.IdentityDbcontext;
@@ -10,6 +12,7 @@ using E_Commerce.Services.MapperProfiles;
 using E_Commerce_web.CustomMiddleWare;
 using E_Commerce_web.Extensions;
 using E_Commerce_web.Factory;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -53,11 +56,13 @@ namespace E_Commerce_web
 
             });
             builder.Services.AddScoped<IBasketReposatory, BasketReposatory>();
+            builder.Services.AddScoped<IIdentityServic, IdentityService>();
             builder.Services.AddScoped<IBasketService, BasketService>();
             builder.Services.AddScoped<ICacheRepository, CacheRepository>();
             builder.Services.AddScoped<ICacheService, CacheService>();
-
-            builder.Services.AddScoped<IDataintializer,Dataintializer>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<StoreIdentityDbcontext>();
+            builder.Services.AddKeyedScoped<IDataintializer,Dataintializer>("Default");
+            builder.Services.AddKeyedScoped<IDataintializer,IdentityDataSeed>("Identity");
             builder.Services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = ApiResoponeFactoryy.GenerateApiValidation;
@@ -71,6 +76,7 @@ namespace E_Commerce_web
             await app.MigrateDatabase();
             await app.MigrateIdentityDatabase();
             await   app.SeedDatabase();
+            await   app.SeedIdentityDatabase();
 
 
             #endregion
