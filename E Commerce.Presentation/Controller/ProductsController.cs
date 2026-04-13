@@ -2,6 +2,7 @@
 using E_Commerce.ServiceAbstraction;
 using E_Commerce.Shared;
 using E_Commerce.Shared.DTOS.Productdtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System;
@@ -23,7 +24,7 @@ namespace E_Commerce.Presentation.Controller
             _productServices = productServices;
         }
 
-
+        [Authorize]
         [HttpGet]
 
         //get:baseurl/api/Products

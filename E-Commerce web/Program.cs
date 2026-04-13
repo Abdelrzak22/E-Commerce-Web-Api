@@ -12,12 +12,15 @@ using E_Commerce.Services.MapperProfiles;
 using E_Commerce_web.CustomMiddleWare;
 using E_Commerce_web.Extensions;
 using E_Commerce_web.Factory;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
 using System.Reflection.Metadata.Ecma335;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace E_Commerce_web
@@ -69,6 +72,24 @@ namespace E_Commerce_web
                 
             });
 
+            builder.Services.AddAuthentication(Options =>
+            {
+                Options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                Options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(option =>
+            {
+                option.SaveToken = true;
+                option.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidIssuer = builder.Configuration["jwtOptions:Issure"],
+                    ValidAudience = builder.Configuration["jwtOptions:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["jwtOptions:SecretKey"]))
+                };
+            });
+
             var app = builder.Build();
 
             #region seedDATA and Migrate
@@ -93,6 +114,7 @@ namespace E_Commerce_web
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

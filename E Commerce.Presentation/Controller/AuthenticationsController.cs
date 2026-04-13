@@ -19,7 +19,7 @@ namespace E_Commerce.Presentation.Controller
         }
 
         //Api/Authentication/Login
-        [HttpPost("Login")
+        [HttpPost("Login")]
         public async Task<ActionResult<UserDtos>> Login(LoginDtos login)
         {
             var Authenticated = await _authentication.LoginAsync(login);
